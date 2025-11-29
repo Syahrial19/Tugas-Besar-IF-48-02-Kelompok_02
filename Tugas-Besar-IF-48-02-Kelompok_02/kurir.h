@@ -10,10 +10,8 @@ struct Paket;
 struct Kurir {
     string id;
     string nama;
-    string umur;
-
+    int umur;
     Paket* childHead;
-
     Kurir* next;
     Kurir* prev;
 };
@@ -26,7 +24,7 @@ struct ListKurir {
 };
 
 void createListKurir(ListKurir &L);
-adrKurir createKurir(string id, string nama);
+adrKurir createKurir(string id, string nama, int umur);
 void insertKurir(ListKurir &L, adrKurir P);
 adrKurir findKurir(ListKurir L, string id);
 void deleteKurir(ListKurir &L, string id);
