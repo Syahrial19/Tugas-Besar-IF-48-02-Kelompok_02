@@ -10,8 +10,8 @@ adrPaket createPaket(string idPaket, string namaPenerima, string alamat) {
     P->namaPenerima = namaPenerima;
     P->alamat = alamat;
 
-    P->next = NULL;
-    P->parent = NULL;
+    P->next = nullptr;
+    P->parent = nullptr;
 
     return P;
 }
