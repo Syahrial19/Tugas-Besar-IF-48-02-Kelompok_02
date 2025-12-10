@@ -8,7 +8,7 @@ adrKurir createKurir(string id, string nama, int umur) {
     K->id = id;
     K->nama = nama;
     K->umur = umur;
-    K->childHead = nullptr;   // belum punya paket
+    K->childHead = nullptr;
 
     K->next = nullptr;
     K->prev = nullptr;
@@ -25,4 +25,3 @@ void insertKurir(ListKurir &L, adrKurir P) {
         L.last = P;
     }
 }
-

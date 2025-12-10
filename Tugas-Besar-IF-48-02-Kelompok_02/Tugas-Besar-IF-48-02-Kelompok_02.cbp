@@ -32,13 +32,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="kurir.h" />
+		<Unit filename="header.h" />
 		<Unit filename="kurir_103012400323.cpp" />
 		<Unit filename="kurir_103012430014.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="main_admin.cpp" />
 		<Unit filename="main_user.cpp" />
-		<Unit filename="paket.h" />
 		<Unit filename="paket_103012400323.cpp" />
 		<Unit filename="paket_103012430014.cpp" />
 		<Extensions />

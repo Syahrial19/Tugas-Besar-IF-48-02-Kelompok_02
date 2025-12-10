@@ -1,5 +1,3 @@
-
-
 void createListPaket(ListPaket &L) {
     L.first = nullptr;
 }
@@ -15,3 +13,12 @@ adrPaket createPaket(string idPaket, string namaPenerima, string alamat) {
 
     return P;
 }
+void addPaketToKurir(Kurir* K, adrPaket P) {
+    if (K == nullptr || P == nullptr)
+        return nullptr;
+
+    P->next = K->childHead;
+    P->parent = K;
+    K->childHead = P;
+}
+
