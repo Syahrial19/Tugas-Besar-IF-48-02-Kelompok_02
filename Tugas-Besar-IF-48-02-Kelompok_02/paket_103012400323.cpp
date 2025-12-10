@@ -1,5 +1,4 @@
 #include "paket.h"
-#include "kurir.h"
 #include <iostream>
 using namespace std;
 
@@ -57,4 +56,5 @@ void showPaketOfKurir(Kurir* K) {
         P = P->next;
     }
 }
+
 
