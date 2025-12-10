@@ -2,14 +2,6 @@
 #include <iostream>
 using namespace std;
 
-void addPaketToKurir(Kurir* K, adrPaket P) {
-    if (K != nullptr) {
-        P->next = K->childHead;
-        P->parent = K;
-        K->childHead = P;
-    }
-}
-
 adrPaket findPaketInKurir(Kurir* K, string idPaket) {
     adrPaket P = K->childHead;
     while (P != nullptr) {
@@ -56,5 +48,6 @@ void showPaketOfKurir(Kurir* K) {
         P = P->next;
     }
 }
+
 
 
