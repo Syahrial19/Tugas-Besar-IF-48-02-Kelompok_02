@@ -3,20 +3,6 @@
 #include <iostream>
 using namespace std;
 
-void createListPaket(ListPaket &L) {
-    L.first = nullptr;
-}
-
-adrPaket createPaket(string idPaket, string namaPenerima, string alamat) {
-    adrPaket P = new Paket;
-    P->idPaket = idPaket;
-    P->namaPenerima = namaPenerima;
-    P->alamat = alamat;
-    P->next = nullptr;
-    P->parent = nullptr;
-    return P;
-}
-
 void addPaketToKurir(Kurir* K, adrPaket P) {
     if (K != nullptr) {
         P->next = K->childHead;
@@ -71,3 +57,4 @@ void showPaketOfKurir(Kurir* K) {
         P = P->next;
     }
 }
+
