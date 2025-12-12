@@ -1,53 +1,44 @@
-#include "paket.h"
+#include "kurir.h"
 #include <iostream>
 using namespace std;
 
-adrPaket findPaketInKurir(Kurir* K, string idPaket) {
-    adrPaket P = K->childHead;
-    while (P != nullptr) {
-        if (P->idPaket == idPaket) {
-            return P;
+addressP createPaket_103012400323(string idPaket, string namaPenerima, string alamat) {
+    addressP P = new elmPaket;
+    P->info.idPaket = idPaket;
+    P->info.namaPenerima = namaPenerima;
+    P->info.alamat = alamat;
+    P->next = nullptr;
+    return P;
+}
+
+bool isEmptyPaket_103012400323(addressK K) {
+    return (K == nullptr || K->firstP == nullptr);
+}
+
+void insertFirstPaket_103012400323(addressK K, addressP P) {
+    if (K->firstP == nullptr) {
+        K->firstP = P;
+    } else {
+        P->next = K->firstP;
+        K->firstP = P;
+    }
+}
+
+void insertLastPaket_103012400323(addressK K, addressP P) {
+    if (K->firstP == nullptr) {
+        K->firstP = P;
+    } else {
+        addressP Q = K->firstP;
+        while (Q->next != nullptr) {
+            Q = Q->next;
         }
-        P = P->next;
-    }
-    return nullptr;
-}
-
-void deletePaketFromKurir(Kurir* K, string idPaket) {
-    if (K == nullptr || K->childHead == nullptr) return;
-
-    adrPaket P = K->childHead;
-
-    if (P->idPaket == idPaket) {
-        K->childHead = P->next;
-        delete P;
-        return;
-    }
-
-    adrPaket prev = nullptr;
-    while (P != nullptr && P->idPaket != idPaket) {
-        prev = P;
-        P = P->next;
-    }
-
-    if (P != nullptr) {
-        prev->next = P->next;
-        delete P;
+        Q->next = P;
     }
 }
 
-void showPaketOfKurir(Kurir* K) {
-    if (K == nullptr) return;
-
-    adrPaket P = K->childHead;
-    while (P != nullptr) {
-        cout << "ID Paket: " << P->idPaket << endl;
-        cout << "Nama Penerima: " << P->namaPenerima << endl;
-        cout << "Alamat: " << P->alamat << endl;
-        cout << "-------------------------\n";
-        P = P->next;
+void insertAfterPaket_103012400323(addressK K, addressP prec, addressP P) {
+    if (prec != nullptr) {
+        P->next = prec->next;
+        prec->next = P;
     }
 }
-
-
-
