@@ -1,41 +1,89 @@
 #include "kurir.h"
+#include <iostream>
+using namespace std;
 
-adrKurir findKurir(ListKurir L, string id) {
-    adrKurir p = L.first;
-    while (p != nullptr) {
-        if (p->id == id) {
-            return p;
+void deleteFirstKurir_103012400323(ListKurir &L, addressK &P) {
+    if (L.first == nullptr) {
+        P = nullptr;
+    } else if (L.first == L.last) {
+        P = L.first;
+        L.first = nullptr;
+        L.last = nullptr;
+    } else {
+        P = L.first;
+        L.first = P->next;
+        L.first->prev = nullptr;
+        P->next = nullptr;
+        P->prev = nullptr;
+    }
+}
+
+void deleteLastKurir_103012400323(ListKurir &L, addressK &P) {
+    if (L.first == nullptr) {
+        P = nullptr;
+    } else if (L.first == L.last) {
+        P = L.first;
+        L.first = nullptr;
+        L.last = nullptr;
+    } else {
+        P = L.last;
+        L.last = P->prev;
+        L.last->next = nullptr;
+        P->next = nullptr;
+        P->prev = nullptr;
+    }
+}
+
+void deleteAfterKurir_103012400323(ListKurir &L, addressK prec, addressK &P) {
+    if (prec == nullptr || prec->next == nullptr) {
+        P = nullptr;
+    } else {
+        P = prec->next;
+        if (P == L.last) {
+            L.last = prec;
+            prec->next = nullptr;
+            P->prev = nullptr;
+            P->next = nullptr;
+        } else {
+            prec->next = P->next;
+            P->next->prev = prec;
+            P->next = nullptr;
+            P->prev = nullptr;
         }
-        p = p->next;
+    }
+}
+
+addressK findKurir_103012400323(ListKurir L, string id) {
+    addressK K = L.first;
+    while (K != nullptr) {
+        if (K->info.id == id) {
+            return K;
+        }
+        K = K->next;
     }
     return nullptr;
 }
 
-void deleteKurir(ListKurir &L, string id) {
-    adrKurir p = findKurir(L, id);
-    if (p == nullptr) return;
-
-    if (p == L.first && p == L.last) {
-        L.first = nullptr;
-        L.last = nullptr;
-    }else if (p == L.first) {
-        L.first = p->next;
-        L.first->prev = nullptr;
-    }else if (p == L.last) {
-        L.last = p->prev;
-        L.last->next = nullptr;
-    }else {
-        p->prev->next = p->next;
-        p->next->prev = p->prev;
+void showAllKurir_103012400323(ListKurir L) {
+    if (L.first == nullptr) {
+        cout << "Tidak ada kurir.\n";
+    } else {
+        addressK K = L.first;
+        while (K != nullptr) {
+            cout << "- ID: " << K->info.id
+                 << ", Nama: " << K->info.nama
+                 << ", Umur: " << K->info.umur << endl;
+            K = K->next;
+        }
     }
-
-    delete p;
 }
 
-void showAllKurir(ListKurir L) {
-    adrKurir p = L.first;
-    while (p != nullptr) {
-        cout << "ID: " << p->id << " | Nama: " << p->nama << " | Umur: " << p->umur << endl;
-        p = p->next;
+int countKurir_103012400323(ListKurir L) {
+    int total = 0;
+    addressK K = L.first;
+    while (K != nullptr) {
+        total++;
+        K = K->next;
     }
+    return total;
 }
