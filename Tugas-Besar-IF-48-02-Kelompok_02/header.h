@@ -1,47 +1,85 @@
-#ifndef HEADER_H_INCLUDED
-#define HEADER_H_INCLUDED
-struct Paket;
+#ifndef KURIR_H_INCLUDED
+#define KURIR_H_INCLUDED
 
-struct Kurir {
+#include <iostream>
+#include <string>
+using namespace std;
+
+typedef struct dataKurir infotypeK;
+typedef struct elmKurir *addressK;
+
+typedef struct dataPaket infotypeP;
+typedef struct elmPaket *addressP;
+
+
+// data kurir
+struct dataKurir {
     string id;
     string nama;
     int umur;
-    Paket* childHead;
-    Kurir* next;
-    Kurir* prev;
 };
 
-typedef Kurir* adrKurir;
+struct elmKurir {
+    infotypeK info;
+    addressP firstP;   // child (paket)
+    addressK next;
+    addressK prev;
+};
 
 struct ListKurir {
-    adrKurir first;
-    adrKurir last;
+    addressK first;
+    addressK last;
 };
-struct Kurir;
-struct Paket {
+
+
+// data paket
+struct dataPaket {
     string idPaket;
     string namaPenerima;
     string alamat;
-    Paket* next;
-    Kurir* parent;
 };
-typedef Paket* adrPaket;
 
-struct ListPaket {
-    adrPaket first;
+struct elmPaket {
+    infotypeP info;
+    addressP next;
 };
+
+
+// kurir
 void createListKurir(ListKurir &L);
-adrKurir createKurir(string id, string nama, int umur);
-void insertKurir(ListKurir &L, adrKurir P);
-adrKurir findKurir(ListKurir L, string id);
-void deleteKurir(ListKurir &L, string id);
+addressK createKurir(string id, string nama, int umur);
+bool isEmptyKurir(ListKurir L);
+
+void insertFirstKurir(ListKurir &L, addressK K);
+void insertLastKurir(ListKurir &L, addressK K);
+void insertAfterKurir(ListKurir &L, addressK prec, addressK K);
+
+void deleteFirstKurir(ListKurir &L, addressK &P);
+void deleteLastKurir(ListKurir &L, addressK &P);
+void deleteAfterKurir(ListKurir &L, addressK prec, addressK &P);
+
+addressK findKurir(ListKurir L, string id);
 void showAllKurir(ListKurir L);
-void createListPaket(ListPaket &L);
-adrPaket createPaket(string idPaket, string namaPenerima, string alamat);
-void addPaketToKurir(Kurir* K, adrPaket P);
-adrPaket findPaketInKurir(Kurir* K, string idPaket);
-void deletePaketFromKurir(Kurir* K, string idPaket);
-void showPaketOfKurir(Kurir* K);
+
+int countKurir(ListKurir L);
 
 
-#endif // HEADER_H_INCLUDED
+// paket
+addressP createPaket(string idPaket, string namaPenerima, string alamat);
+bool isEmptyPaket(addressK K);
+
+void insertFirstPaket(addressK K, addressP P);
+void insertLastPaket(addressK K, addressP P);
+void insertAfterPaket(addressK K, addressP prec, addressP P);
+
+void deleteFirstPaket(addressK K, addressP &P);
+void deleteLastPaket(addressK K, addressP &P);
+void deleteAfterPaket(addressK K, addressP prec, addressP &P);
+
+addressP findPaket(addressK K, string idPaket);
+void showAllPaket(addressK K);
+
+int countPaket(addressK K);
+
+void showPaketOfKurir(addressK K)
+#endif
