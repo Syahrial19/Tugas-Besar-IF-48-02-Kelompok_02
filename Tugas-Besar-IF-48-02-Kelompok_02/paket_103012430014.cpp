@@ -9,6 +9,8 @@ void deleteFirstPaket(addressK K, addressP &P) {
         P->next = nullptr;
     }
 }
+
+
 void deleteLastPaket(addressK K, addressP &P) {
     if (!isEmptyPaket(K)) {
 
@@ -36,18 +38,25 @@ void deleteAfterPaket(addressK K, addressP prec, addressP &P) {
     }
 }
 
-adrKurir findPaket(ListKurir L, string idpaket){
-    adrP P = L.first;
+addressK findPaket(ListKurir L, string idPaket) {
+    addressK K = L.first;
 
-    while (P != nullptr){
-        if (P->info.idpaket == idpaket){
-            return P;
+    while (K != nullptr) {
+        addressP P = K->firstP;
+
+        while (P != nullptr) {
+            if (P->info.idPaket == idPaket) {
+                return K;   // kurir pemilik paket
+            }
+            P = P->next;
         }
-        P = P->next;
+
+        K = K->next;
     }
 
-    return ;
+    return nullptr;
 }
+
 
 void showAllPaket(addressK K) {
     if (isEmptyPaket(K)) {
