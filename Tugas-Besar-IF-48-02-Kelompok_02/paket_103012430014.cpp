@@ -38,20 +38,14 @@ void deleteAfterPaket(addressK K, addressP prec, addressP &P) {
     }
 }
 
-addressK findPaket(ListKurir L, string idPaket) {
-    addressK K = L.first;
+addressP findPaket(addressK K, string idPaket) {
+    addressP P = K->firstP;
 
-    while (K != nullptr) {
-        addressP P = K->firstP;
-
-        while (P != nullptr) {
-            if (P->info.idPaket == idPaket) {
-                return K;   // kurir pemilik paket
-            }
-            P = P->next;
+    while (P != nullptr) {
+        if (P->info.idPaket == idPaket) {
+            return P;
         }
-
-        K = K->next;
+        P = P->next;
     }
 
     return nullptr;
