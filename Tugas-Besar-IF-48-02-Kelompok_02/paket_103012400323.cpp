@@ -1,8 +1,8 @@
-#include "kurir.h"
+#include "header.h"
 #include <iostream>
 using namespace std;
 
-addressP createPaket_103012400323(string idPaket, string namaPenerima, string alamat) {
+addressP createPaket(string idPaket, string namaPenerima, string alamat) {
     addressP P = new elmPaket;
     P->info.idPaket = idPaket;
     P->info.namaPenerima = namaPenerima;
@@ -11,11 +11,11 @@ addressP createPaket_103012400323(string idPaket, string namaPenerima, string al
     return P;
 }
 
-bool isEmptyPaket_103012400323(addressK K) {
+bool isEmptyPaket(addressK K) {
     return (K == nullptr || K->firstP == nullptr);
 }
 
-void insertFirstPaket_103012400323(addressK K, addressP P) {
+void insertFirstPaket(addressK K, addressP P) {
     if (K->firstP == nullptr) {
         K->firstP = P;
     } else {
@@ -24,7 +24,7 @@ void insertFirstPaket_103012400323(addressK K, addressP P) {
     }
 }
 
-void insertLastPaket_103012400323(addressK K, addressP P) {
+void insertLastPaket(addressK K, addressP P) {
     if (K->firstP == nullptr) {
         K->firstP = P;
     } else {
@@ -36,7 +36,7 @@ void insertLastPaket_103012400323(addressK K, addressP P) {
     }
 }
 
-void insertAfterPaket_103012400323(addressK K, addressP prec, addressP P) {
+void insertAfterPaket(addressK K, addressP prec, addressP P) {
     if (prec != nullptr) {
         P->next = prec->next;
         prec->next = P;
