@@ -1,8 +1,8 @@
-#include "kurir.h"
+#include "header.h"
 #include <iostream>
 using namespace std;
 
-void deleteFirstKurir_103012400323(ListKurir &L, addressK &P) {
+void deleteFirstKurir(ListKurir &L, addressK &P) {
     if (L.first == nullptr) {
         P = nullptr;
     } else if (L.first == L.last) {
@@ -18,7 +18,7 @@ void deleteFirstKurir_103012400323(ListKurir &L, addressK &P) {
     }
 }
 
-void deleteLastKurir_103012400323(ListKurir &L, addressK &P) {
+void deleteLastKurir(ListKurir &L, addressK &P) {
     if (L.first == nullptr) {
         P = nullptr;
     } else if (L.first == L.last) {
@@ -34,7 +34,7 @@ void deleteLastKurir_103012400323(ListKurir &L, addressK &P) {
     }
 }
 
-void deleteAfterKurir_103012400323(ListKurir &L, addressK prec, addressK &P) {
+void deleteAfterKurir(ListKurir &L, addressK prec, addressK &P) {
     if (prec == nullptr || prec->next == nullptr) {
         P = nullptr;
     } else {
@@ -53,7 +53,7 @@ void deleteAfterKurir_103012400323(ListKurir &L, addressK prec, addressK &P) {
     }
 }
 
-addressK findKurir_103012400323(ListKurir L, string id) {
+addressK findKurir(ListKurir L, string id) {
     addressK K = L.first;
     while (K != nullptr) {
         if (K->info.id == id) {
@@ -64,7 +64,7 @@ addressK findKurir_103012400323(ListKurir L, string id) {
     return nullptr;
 }
 
-void showAllKurir_103012400323(ListKurir L) {
+void showAllKurir(ListKurir L) {
     if (L.first == nullptr) {
         cout << "Tidak ada kurir.\n";
     } else {
@@ -78,7 +78,7 @@ void showAllKurir_103012400323(ListKurir L) {
     }
 }
 
-int countKurir_103012400323(ListKurir L) {
+int countKurir(ListKurir L) {
     int total = 0;
     addressK K = L.first;
     while (K != nullptr) {
