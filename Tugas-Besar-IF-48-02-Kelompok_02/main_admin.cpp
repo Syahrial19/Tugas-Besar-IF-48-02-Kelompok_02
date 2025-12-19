@@ -3,131 +3,282 @@
 #include "main.h"
 using namespace std;
 
-void menuUser(ListKurir &L) {
-    int opsi = -1;
-    string idK;
-    addressK K;
+void menuAdmin(ListKurir &L) {
 
-    while (opsi != 0) {
-        system("cls");
-        cout << "=========== MENU STUDI KASUS ===========\n";
-        cout << "1. Tambah Kurir \n";
-        cout << "2. Hapus Kurir TANPA paket\n";
-        cout << "3. Cari Kurir berdasarkan ID\n";
-        cout << "4. Hitung total paket kurir\n";
-        cout << "5. Kurir dengan paket terbanyak\n";
-        cout << "6. Tampilkan semua kurir & paket\n";
-        cout << "0. Kembali\n";
-        cout << "Pilih menu: ";
+    string idK, namaK, idP, penerima, alamat;
+    int umur;
+    addressK K, precK, hapusK;
+    addressP P, precP, hapusP;
+
+    int opsi;
+
+    while (true) {
+        cout << "\n===== MENU ADMIN KURIR & PAKET =====\n";
+        cout << "1. Tambah Kurir (insert first)\n";
+        cout << "2. Tambah Kurir (insert last)\n";
+        cout << "3. Tambah Kurir (insert after)\n";
+        cout << "4. Hapus Kurir (delete first)\n";
+        cout << "5. Hapus Kurir (delete last)\n";
+        cout << "6. Hapus Kurir (delete after)\n";
+        cout << "7. Cari Kurir\n";
+        cout << "8. Tampilkan Semua Kurir\n";
+
+        cout << "\n=== MENU PAKET ===\n";
+        cout << "9. Tambah Paket (insert first)\n";
+        cout << "10. Tambah Paket (insert last)\n";
+        cout << "11. Tambah Paket (insert after)\n";
+        cout << "12. Hapus Paket (delete first)\n";
+        cout << "13. Hapus Paket (delete last)\n";
+        cout << "14. Hapus Paket (delete after)\n";
+        cout << "15. Cari Paket\n";
+        cout << "16. Tampilkan Semua Paket dari Kurir\n";
+
+        cout << "\n0. Keluar\n";
+        cout << "Opsi: ";
         cin >> opsi;
 
         switch (opsi) {
 
-        case 1: {
-            string nama;
-            int umur;
-
+        case 1:
             cout << "ID Kurir : "; cin >> idK;
-            cout << "Nama     : "; cin >> nama;
+            cout << "Nama     : "; cin >> namaK;
             cout << "Umur     : "; cin >> umur;
 
-            if (umur >= 21) {
-                insertLastKurir(L, createKurir(idK, nama, umur));
-                cout << "Kurir berhasil ditambahkan\n";
+            K = createKurir(idK, namaK, umur);
+            insertFirstKurir(L, K);
+            cout << "Kurir berhasil ditambahkan.\n";
+            break;
+
+        case 2:
+            cout << "ID Kurir : "; cin >> idK;
+            cout << "Nama     : "; cin >> namaK;
+            cout << "Umur     : "; cin >> umur;
+
+            K = createKurir(idK, namaK, umur);
+            insertLastKurir(L, K);
+            cout << "Kurir berhasil ditambahkan.\n";
+            break;
+
+        case 3:
+            cout << "ID Kurir yang dituju: ";
+            cin >> idK;
+
+            precK = findKurir(L, idK);
+            if (precK != nullptr) {
+                cout << "ID Kurir baru : "; cin >> idK;
+                cout << "Nama Kurir    : "; cin >> namaK;
+                cout << "Umur          : "; cin >> umur;
+
+                K = createKurir(idK, namaK, umur);
+                insertAfterKurir(L, precK, K);
+                cout << "Insert-after berhasil.\n";
             } else {
-                cout << "Gagal! Umur Kurang dari 21\n";
+                cout << "Kurir tidak ditemukan.\n";
             }
             break;
-        }
 
-        case 2: {
-            bool ketemu = false;
-            K = L.first;
+        case 4:
+            deleteFirstKurir(L, hapusK);
+            if (hapusK) {
+                cout << "Kurir dihapus: " << hapusK->info.nama << endl;
+            } else {
+                cout << "List kosong.\n";
+            }
+            break;
 
-            while (K != nullptr) {
-                if (countPaket(K) == 0) {
-                    addressK hapus;
-                    deleteFirstKurir(L, hapus);
-                    cout << "Kurir tanpa paket berhasil dihapus\n";
-                    ketemu = true;
-                    break;
+        case 5:
+            deleteLastKurir(L, hapusK);
+            if (hapusK) {
+                cout << "Kurir dihapus: " << hapusK->info.nama << endl;
+            } else {
+                cout << "List kosong.\n";
+            }
+            break;
+
+        case 6:
+            cout << "ID Kurir yang dituju: ";
+            cin >> idK;
+
+            precK = findKurir(L, idK);
+            if (precK) {
+                deleteAfterKurir(L, precK, hapusK);
+                if (hapusK) {
+                    cout << "Kurir dihapus: " << hapusK->info.nama << endl;
+                } else {
+                    cout << "Tidak ada kurir setelah yang dituju.\n";
                 }
-                K = K->next;
-            }
-
-            if (!ketemu) {
-                cout << "Tidak ada kurir tanpa paket\n";
+            } else {
+                cout << "Kurir tidak ditemukan.\n";
             }
             break;
-        }
 
-        case 3: {
+        case 7:
             cout << "Masukkan ID Kurir: ";
             cin >> idK;
 
             K = findKurir(L, idK);
             if (K) {
-                cout << "Kurir ditemukan\n";
+                cout << "ID   : " << K->info.id << endl;
                 cout << "Nama : " << K->info.nama << endl;
                 cout << "Umur : " << K->info.umur << endl;
             } else {
-                cout << "Kurir tidak ditemukan\n";
+                cout << "Kurir tidak ditemukan.\n";
             }
             break;
-        }
 
-        case 4: {
-            cout << "Masukkan ID Kurir: ";
+        case 8:
+            showAllKurir(L);
+            break;
+
+        case 9:
+            cout << "ID Kurir: ";
             cin >> idK;
 
             K = findKurir(L, idK);
             if (K) {
-                cout << "Total paket kurir: " << countPaket(K) << endl;
+                cout << "ID Paket: "; cin >> idP;
+                cout << "Nama Penerima: "; cin >> penerima;
+                cout << "Alamat: "; cin >> alamat;
+
+                P = createPaket(idP, penerima, alamat);
+                insertFirstPaket(K, P);
+
+                cout << "Paket berhasil ditambahkan.\n";
             } else {
-                cout << "Kurir tidak ditemukan\n";
+                cout << "Kurir tidak ditemukan.\n";
             }
             break;
-        }
 
-        case 5: {
-            addressK maxKurir = nullptr;
-            int maxPaket = -1;
+        case 10:
+            cout << "ID Kurir: ";
+            cin >> idK;
 
-            for (K = L.first; K != nullptr; K = K->next) {
-                int jml = countPaket(K);
-                if (jml > maxPaket) {
-                    maxPaket = jml;
-                    maxKurir = K;
+            K = findKurir(L, idK);
+            if (K) {
+                cout << "ID Paket: "; cin >> idP;
+                cout << "Nama Penerima: "; cin >> penerima;
+                cout << "Alamat: "; cin >> alamat;
+
+                P = createPaket(idP, penerima, alamat);
+                insertLastPaket(K, P);
+
+                cout << "Paket berhasil ditambahkan.\n";
+            } else {
+                cout << "Kurir tidak ditemukan.\n";
+            }
+            break;
+
+        case 11:
+            cout << "ID Kurir: ";
+            cin >> idK;
+
+            K = findKurir(L, idK);
+            if (K) {
+                cout << "ID Paket yang dituju: ";
+                cin >> idP;
+
+                precP = findPaket(K, idP);
+                if (precP) {
+                    cout << "ID Paket baru: "; cin >> idP;
+                    cout << "Nama Penerima: "; cin >> penerima;
+                    cout << "Alamat: "; cin >> alamat;
+
+                    P = createPaket(idP, penerima, alamat);
+                    insertAfterPaket(K, precP, P);
+
+                    cout << "Insert-after berhasil.\n";
+                } else {
+                    cout << "Paket yang dituju tidak ditemukan.\n";
                 }
             }
-
-            if (maxKurir) {
-                cout << "Kurir tersibuk\n";
-                cout << "Nama : " << maxKurir->info.nama << endl;
-                cout << "Total Paket : " << maxPaket << endl;
-            } else {
-                cout << "Data kurir kosong\n";
-            }
             break;
-        }
 
-        case 6: {
-            if (L.first == nullptr) {
-                cout << "Data kurir kosong\n";
-            } else {
-                for (K = L.first; K != nullptr; K = K->next) {
-                    cout << "================================\n";
-                    cout << "ID Kurir : " << K->info.id << endl;
-                    cout << "Nama     : " << K->info.nama << endl;
-                    cout << "Umur     : " << K->info.umur << endl;
-                    cout << "Daftar Paket:\n";
-                    showPaketOfKurir(K);
+        case 12:
+            cout << "ID Kurir: ";
+            cin >> idK;
+
+            K = findKurir(L, idK);
+            if (K) {
+                deleteFirstPaket(K, hapusP);
+                if (hapusP) {
+                    cout << "Paket dihapus: " << hapusP->info.idPaket << endl;
+                } else {
+                    cout << "List paket kosong.\n";
                 }
             }
             break;
-        }
-        }
 
-        if (opsi != 0) system("pause");
+        case 13:
+            cout << "ID Kurir: ";
+            cin >> idK;
+
+            K = findKurir(L, idK);
+            if (K) {
+                deleteLastPaket(K, hapusP);
+                if (hapusP) {
+                    cout << "Paket dihapus: " << hapusP->info.idPaket << endl;
+                } else {
+                    cout << "List paket kosong.\n";
+                }
+            }
+            break;
+
+        case 14:
+            cout << "ID Kurir: ";
+            cin >> idK;
+
+            K = findKurir(L, idK);
+            if (K) {
+                cout << "ID Paket yang dituju: ";
+                cin >> idP;
+
+                precP = findPaket(K, idP);
+                if (precP) {
+                    deleteAfterPaket(K, precP, hapusP);
+                    if (hapusP) {
+                        cout << "Paket dihapus: " << hapusP->info.idPaket << endl;
+                    } else {
+                        cout << "Tidak ada paket setelah yang dituju.\n";
+                    }
+                }
+            }
+            break;
+
+        case 15:
+            cout << "ID Kurir: ";
+            cin >> idK;
+
+            K = findKurir(L, idK);
+            if (K) {
+                cout << "ID Paket: ";
+                cin >> idP;
+
+                P = findPaket(K, idP);
+                if (P) {
+                    cout << "ID Paket     : " << P->info.idPaket << endl;
+                    cout << "Nama Penerima: " << P->info.namaPenerima << endl;
+                    cout << "Alamat       : " << P->info.alamat << endl;
+                } else {
+                    cout << "Paket tidak ditemukan.\n";
+                }
+            }
+            break;
+
+        case 16:
+            cout << "ID Kurir: ";
+            cin >> idK;
+
+            K = findKurir(L, idK);
+            if (K) {
+                showPaketOfKurir(K);
+            }
+            break;
+
+        case 0:
+            return ;
+
+        default:
+            cout << "Opsi tidak valid.\n";
+        }
     }
 }
