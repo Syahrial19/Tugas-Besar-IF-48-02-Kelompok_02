@@ -21,7 +21,7 @@ struct dataKurir {
 
 struct elmKurir {
     infotypeK info;
-    addressP firstP;   // child (paket)
+    addressP firstP;
     addressK next;
     addressK prev;
 };
@@ -78,8 +78,7 @@ void deleteAfterPaket(addressK K, addressP prec, addressP &P);
 
 addressP findPaket(addressK K, string idPaket);
 void showAllPaket(addressK K);
-
+void showPaketOfKurir(addressK K);
 int countPaket(addressK K);
 
-void showPaketOfKurir(addressK K)
 #endif
