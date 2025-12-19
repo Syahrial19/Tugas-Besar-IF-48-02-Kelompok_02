@@ -1,4 +1,5 @@
 #include <iostream>
+#include "header.h"
 #include "main.h"
 
 using namespace std;
@@ -6,11 +7,14 @@ using namespace std;
 int main() {
     int option = -99;
 
+    ListKurir L;
+    createListKurir(L);
+
     while (option != 0) {
         system("cls");
         cout << "============ Menu ============\n";
-        cout << "|| 1. Test Case             ||\n";
-        cout << "|| 2. Study Case            ||\n";
+        cout << "|| 1. Test Case (Admin)     ||\n";
+        cout << "|| 2. Study Case (User)     ||\n";
         cout << "|| 0. Exit                  ||\n";
         cout << "==============================\n";
         cout << "Choose your option : ";
@@ -18,13 +22,11 @@ int main() {
 
         switch(option) {
             case 1:
-                cout << "Kamu Memilih Test Case\n";
-                menuAdmin();   // ADMIN / TEST CASE
+                menuAdmin(L);
                 break;
 
             case 2:
-                cout << "Kamu Memilih Study Case\n";
-                menuUser();    // USER / STUDY CASE
+                menuUser(L);
                 break;
 
             case 0:
@@ -34,9 +36,7 @@ int main() {
             default:
                 cout << "Pilihan tidak valid.\n";
                 system("pause");
-                break;
         }
     }
-
     return 0;
 }
