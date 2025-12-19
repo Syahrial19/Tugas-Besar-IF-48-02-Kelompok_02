@@ -1,28 +1,29 @@
 #include <iostream>
 #include "header.h"
+#include "main.h"
 using namespace std;
 
-void menuUser() {
+void menuUser(ListKurir &L) {
     int opsi = -1;
-    string idK, idP;
+    string idK;
     addressK K;
-    ListKurir L;
+
     while (opsi != 0) {
         system("cls");
         cout << "=========== MENU STUDI KASUS ===========\n";
         cout << "1. Tambah Kurir \n";
         cout << "2. Hapus Kurir TANPA paket\n";
-        cout << "5. Cari Kurir berdasarkan ID\n";
-        cout << "6. Hitung total paket kurir\n";
-        cout << "7. Kurir dengan paket terbanyak\n";
-        cout << "8. Tampilkan semua kurir\n";
+        cout << "3. Cari Kurir berdasarkan ID\n";
+        cout << "4. Hitung total paket kurir\n";
+        cout << "5. Kurir dengan paket terbanyak\n";
+        cout << "6. Tampilkan semua kurir & paket\n";
         cout << "0. Kembali\n";
         cout << "Pilih menu: ";
         cin >> opsi;
 
         switch (opsi) {
 
-        case 1: { // Insert parent kondisi
+        case 1: {
             string nama;
             int umur;
 
@@ -31,8 +32,7 @@ void menuUser() {
             cout << "Umur     : "; cin >> umur;
 
             if (umur >= 21) {
-                K = createKurir(idK, nama, umur);
-                insertLastKurir(L, K);
+                insertLastKurir(L, createKurir(idK, nama, umur));
                 cout << "Kurir berhasil ditambahkan\n";
             } else {
                 cout << "Gagal! Umur Kurang dari 21\n";
@@ -40,7 +40,7 @@ void menuUser() {
             break;
         }
 
-        case 2: { // Delete parent kondisi
+        case 2: {
             bool ketemu = false;
             K = L.first;
 
@@ -61,7 +61,7 @@ void menuUser() {
             break;
         }
 
-        case 5: { // Searching kondisi
+        case 3: {
             cout << "Masukkan ID Kurir: ";
             cin >> idK;
 
@@ -76,32 +76,29 @@ void menuUser() {
             break;
         }
 
-        case 6: { // Komputasi 1
+        case 4: {
             cout << "Masukkan ID Kurir: ";
             cin >> idK;
 
             K = findKurir(L, idK);
             if (K) {
-                cout << "Total paket kurir: "
-                     << countPaket(K) << endl;
+                cout << "Total paket kurir: " << countPaket(K) << endl;
             } else {
                 cout << "Kurir tidak ditemukan\n";
             }
             break;
         }
 
-        case 7: { // Komputasi 2
+        case 5: {
             addressK maxKurir = nullptr;
             int maxPaket = -1;
 
-            K = L.first;
-            while (K != nullptr) {
+            for (K = L.first; K != nullptr; K = K->next) {
                 int jml = countPaket(K);
                 if (jml > maxPaket) {
                     maxPaket = jml;
                     maxKurir = K;
                 }
-                K = K->next;
             }
 
             if (maxKurir) {
@@ -114,11 +111,23 @@ void menuUser() {
             break;
         }
 
-        case 8: // Show parent
-            showAllKurir(L);
+        case 6: {
+            if (L.first == nullptr) {
+                cout << "Data kurir kosong\n";
+            } else {
+                for (K = L.first; K != nullptr; K = K->next) {
+                    cout << "================================\n";
+                    cout << "ID Kurir : " << K->info.id << endl;
+                    cout << "Nama     : " << K->info.nama << endl;
+                    cout << "Umur     : " << K->info.umur << endl;
+                    cout << "Daftar Paket:\n";
+                    showPaketOfKurir(K);
+                }
+            }
             break;
         }
+        }
 
-        system("pause");
+        if (opsi != 0) system("pause");
     }
 }
