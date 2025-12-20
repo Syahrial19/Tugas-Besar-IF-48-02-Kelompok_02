@@ -55,3 +55,24 @@ void insertAfterKurir(ListKurir &L, addressK prec, addressK K) {
         prec->next = K;
     }
 }
+addressK findKurirPaketTersedikit(ListKurir L) {
+    if (L.first == nullptr) {
+        return nullptr;
+    }
+
+    addressK K = L.first;
+    addressK minKurir = K;
+    int minPaket = countPaket(K);
+
+    K = K->next;
+    while (K != nullptr) {
+        int jumlah = countPaket(K);
+        if (jumlah < minPaket) {
+            minPaket = jumlah;
+            minKurir = K;
+        }
+        K = K->next;
+    }
+
+    return minKurir;
+}
