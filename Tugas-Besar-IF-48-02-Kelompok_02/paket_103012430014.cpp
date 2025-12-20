@@ -10,7 +10,6 @@ void deleteFirstPaket(addressK K, addressP &P) {
     }
 }
 
-
 void deleteLastPaket(addressK K, addressP &P) {
     if (!isEmptyPaket(K)) {
 
@@ -99,6 +98,77 @@ void showPaketOfKurir(addressK K) {
                  << endl;
             P = P->next;
         }
+    }
+}
+void deletePaketByAlamatAllKurir(ListKurir &L, string alamat) {
+    addressK K = L.first;
+    bool ditemukan = false;
+
+    while (K != nullptr) {
+        addressP P = K->firstP;
+        addressP prev = nullptr;
+
+        while (P != nullptr) {
+            if (P->info.alamat == alamat) {
+                addressP hapus = P;
+                ditemukan = true;
+
+                if (prev == nullptr) {
+                    K->firstP = P->next;
+                    P = K->firstP;
+                }
+
+                else {
+                    prev->next = P->next;
+                    P = P->next;
+                }
+
+                hapus->next = nullptr;
+                delete hapus;
+            } else {
+                prev = P;
+                P = P->next;
+            }
+        }
+
+        K = K->next;
+    }
+
+    if (ditemukan)
+        cout << "Semua paket dengan alamat \"" << alamat << "\" berhasil dihapus\n";
+    else
+        cout << "Tidak ditemukan paket dengan alamat tersebut\n";
+}
+void showPaketByAlamatAllKurir(ListKurir L, string alamat) {
+    addressK K = L.first;
+    bool ditemukan = false;
+
+    while (K != nullptr) {
+        addressP P = K->firstP;
+
+        while (P != nullptr) {
+            if (P->info.alamat == alamat) {
+                if (!ditemukan) {
+                    cout << "Daftar paket dengan alamat \""
+                         << alamat << "\":\n";
+                    cout << "================================\n";
+                }
+
+                ditemukan = true;
+                cout << "ID Kurir   : " << K->info.id << endl;
+                cout << "Nama Kurir : " << K->info.nama << endl;
+                cout << "ID Paket   : " << P->info.idPaket << endl;
+                cout << "Penerima   : " << P->info.namaPenerima << endl;
+                cout << "Alamat     : " << P->info.alamat << endl;
+                cout << "--------------------------------\n";
+            }
+            P = P->next;
+        }
+        K = K->next;
+    }
+
+    if (!ditemukan) {
+        cout << "Tidak ditemukan paket dengan alamat tersebut\n";
     }
 }
 
