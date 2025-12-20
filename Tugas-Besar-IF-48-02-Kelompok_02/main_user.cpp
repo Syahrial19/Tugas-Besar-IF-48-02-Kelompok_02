@@ -11,12 +11,15 @@ void menuUser(ListKurir &L) {
     while (opsi != 0) {
         system("cls");
         cout << "=========== MENU STUDI KASUS ===========\n";
-        cout << "1. Tambah Kurir \n";
+        cout << "1. Tambah Kurir dengan minimal umur \n";
         cout << "2. Hapus Kurir TANPA paket\n";
         cout << "3. Cari Kurir berdasarkan ID\n";
         cout << "4. Hitung total paket kurir\n";
         cout << "5. Kurir dengan paket terbanyak\n";
         cout << "6. Tampilkan semua kurir & paket\n";
+        cout << "7. Tambah Paket ke Kurir dengan Paket Paling Sedikit\n";
+        cout << "8. Hapus paket berdasarkan alamat tertentu \n";
+        cout << "9. Tampilkan paket berdasarkan alamat tertentu\n";
         cout << "0. Kembali\n";
         cout << "Pilih menu: ";
         cin >> opsi;
@@ -126,6 +129,56 @@ void menuUser(ListKurir &L) {
             }
             break;
         }
+        case 7: {
+            if (L.first == nullptr) {
+                cout << "Belum ada kurir\n";
+                break;
+            }
+                string idP, penerima, alamat;
+                cout << "ID Paket       : "; cin >> idP;
+                cout << "Nama Penerima  : "; cin >> penerima;
+                cout << "Alamat         : "; cin >> alamat;
+
+                addressK target = findKurirPaketTersedikit(L);
+
+            if (target != nullptr) {
+                addressP P = createPaket(idP, penerima, alamat);
+                insertLastPaket(target, P);
+                cout << "Paket berhasil ditambahkan ke kurir:\n";
+                cout << "ID   : " << target->info.id << endl;
+                cout << "Nama : " << target->info.nama << endl;
+                cout << "Total Paket Sekarang: "
+                << countPaket(target) << endl;
+            }
+
+            break;
+    }
+
+        case 8: {
+            if (L.first == nullptr) {
+            cout << "Belum ada data kurir\n";
+            break;
+    }
+            string alamat;
+            cout << "Masukkan alamat pengiriman yang akan dihapus: ";
+            cin >> alamat;
+            deletePaketByAlamatAllKurir(L, alamat);
+
+    break;
+}
+            case 9: {
+            if (L.first == nullptr) {
+            cout << "Belum ada data kurir\n";
+            break;
+    }
+
+            string alamat;
+            cout << "Masukkan alamat pengiriman: ";
+            cin >> alamat;
+            showPaketByAlamatAllKurir(L, alamat);
+            break;
+}
+
         }
 
         if (opsi != 0) system("pause");
