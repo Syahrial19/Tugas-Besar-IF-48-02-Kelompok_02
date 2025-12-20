@@ -62,7 +62,7 @@ addressK findKurir(ListKurir L, string id);
 void showAllKurir(ListKurir L);
 
 int countKurir(ListKurir L);
-
+addressK findKurirPaketTersedikit(ListKurir L);
 
 // paket
 addressP createPaket(string idPaket, string namaPenerima, string alamat);
@@ -80,5 +80,8 @@ addressP findPaket(addressK K, string idPaket);
 void showAllPaket(addressK K);
 void showPaketOfKurir(addressK K);
 int countPaket(addressK K);
+void deletePaketByAlamatAllKurir(ListKurir &L, string alamat);
+void showPaketByAlamatAllKurir(ListKurir L, string alamat);
+
 
 #endif
